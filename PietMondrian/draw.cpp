@@ -54,6 +54,16 @@ void splitRect(float p, char xORy, std::vector<sf::RectangleShape*>& rects) {
     }
 }
 
+void randomChooseAndColor(std::vector<sf::RectangleShape*>& rects, sf::Color color) {
+    while (true) {
+        std::shuffle(rects.begin(), rects.end(), std::mt19937(std::random_device()()));
+        if (rects[1]->getFillColor() == sf::Color(0, 0, 0)) {
+            rects[1]->setFillColor(color);
+            break;
+        }
+    }
+}
+
 int drawPietMondrian() {
     sf::RenderWindow window(sf::VideoMode(width, width), "Piet Mondrian");
     std::vector<sf::RectangleShape*> rects;
@@ -65,12 +75,9 @@ int drawPietMondrian() {
         }
     }
 
-    std::random_shuffle(rects.begin(), rects.end());
-    rects[0]->setFillColor(sf::Color(255, 0, 0));
-    std::random_shuffle(rects.begin(), rects.end());
-    rects[0]->setFillColor(sf::Color(0, 255, 0));
-    std::random_shuffle(rects.begin(), rects.end());
-    rects[0]->setFillColor(sf::Color(0, 0, 255));
+    randomChooseAndColor(rects, sf::Color(255, 0, 0));
+    randomChooseAndColor(rects, sf::Color(0, 255, 0));
+    randomChooseAndColor(rects, sf::Color(0, 0, 255));
 
     while (window.isOpen()) {
         sf::Event event;
