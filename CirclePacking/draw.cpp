@@ -39,7 +39,6 @@ bool circleOverlap(sf::CircleShape* c1, sf::CircleShape* c2) {
     return distance < r1 + r2;
 }
 
-
 sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleShape*>& circles) {
     float radius { generateRandomNumber( 144 ) };
 

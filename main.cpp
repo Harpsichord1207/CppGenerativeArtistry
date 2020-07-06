@@ -3,8 +3,9 @@
 //
 
 int drawCirclePacking();
+int drawPietMondrian();
 
 int main() {
-    drawCirclePacking();
+    drawPietMondrian();
     return 0;
 }
