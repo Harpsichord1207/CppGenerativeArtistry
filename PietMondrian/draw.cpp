@@ -3,13 +3,14 @@
 //
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include <ctime>
 #include <random>
 #include <vector>
 
 
 static int width { 600 };
-static float thickness { 10.f };
+static float thickness { 5.f };
 static std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
 
 bool randomBool() {
@@ -59,13 +60,17 @@ int drawPietMondrian() {
     rects.push_back( generateRect(static_cast<float>(width), static_cast<float>(width)) );
 
     for (auto c: "XY") {
-        splitRect(100.f, c, rects);
-        splitRect(200.f, c, rects);
-        splitRect(300.f, c, rects);
-        splitRect(400.f, c, rects);
-        splitRect(500.f, c, rects);
-
+        for (int i { 60 }; i < width; i+=60) {
+            splitRect(static_cast<float>(i), c, rects);
+        }
     }
+
+    std::random_shuffle(rects.begin(), rects.end());
+    rects[0]->setFillColor(sf::Color(255, 0, 0));
+    std::random_shuffle(rects.begin(), rects.end());
+    rects[0]->setFillColor(sf::Color(0, 255, 0));
+    std::random_shuffle(rects.begin(), rects.end());
+    rects[0]->setFillColor(sf::Color(0, 0, 255));
 
     while (window.isOpen()) {
         sf::Event event;
