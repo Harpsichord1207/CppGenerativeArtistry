@@ -9,9 +9,9 @@
 #include <random>
 #include <vector>
 
-static int width { 800 };
+static int width { 600 };
 static int height { 600 };
-static int maxCount { 1250 };
+static int maxCount { 1000 };
 static std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
 
 float generateRandomNumber(int maxLength) {
