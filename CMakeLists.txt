@@ -13,5 +13,5 @@ else()
 endif()
 
 include_directories(${SFML_INCLUDE_DIR})
-add_executable(CppGenerativeArtistry main.cpp)
+add_executable(CppGenerativeArtistry main.cpp CirclePacking/draw.cpp)
 target_link_libraries(CppGenerativeArtistry sfml-audio sfml-network sfml-graphics sfml-window sfml-system)

@@ -82,9 +82,7 @@ sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleSh
     return circle;
 }
 
-
-
-int main() {
+int drawCirclePacking() {
     sf::RenderWindow window(sf::VideoMode(width, height), "Circle Packing");
     std::vector<sf::CircleShape*> circles;
 
