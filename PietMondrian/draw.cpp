@@ -3,20 +3,14 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include <algorithm>
-#include <ctime>
-#include <random>
 #include <vector>
+#include "../constants.h"
 
 
-static int width { 600 };
 static float thickness { 5.f };
-static std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
 
-int randomNumber(int min, int max) {
-    std::uniform_int_distribution die(min, max);
-    return die(mersenne);
-}
+
+int randomNumber(int min, int max);
 
 bool randomBool() {
     return randomNumber(1, 100) >= 50;
@@ -70,6 +64,7 @@ void randomChooseAndColor(std::vector<sf::RectangleShape*>& rects, sf::Color col
 }
 
 int drawPietMondrian() {
+    int width { constants::width };
     sf::RenderWindow window(sf::VideoMode(width, width), "Piet Mondrian");
     std::vector<sf::RectangleShape*> rects;
     rects.push_back( generateRect(static_cast<float>(width), static_cast<float>(width)) );

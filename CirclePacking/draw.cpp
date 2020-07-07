@@ -3,21 +3,16 @@
 //
 
 #include <SFML/Graphics.hpp>
-
 #include <ctime>
 #include <iostream>
 #include <random>
 #include <vector>
+#include "../constants.h"
 
-static int width { 600 };
-static int height { 600 };
+
 static int maxCount { 1000 };
-static std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
 
-float generateRandomNumber(int maxLength) {
-    std::uniform_int_distribution die{ 1, maxLength - 1};
-    return die(mersenne);
-}
+int randomNumber(int min, int max);
 
 bool circleOverlap(sf::CircleShape* c1, sf::CircleShape* c2) {
     float x1 { c1->getPosition().x };
@@ -40,19 +35,16 @@ bool circleOverlap(sf::CircleShape* c1, sf::CircleShape* c2) {
 }
 
 sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleShape*>& circles) {
-    float radius { generateRandomNumber( 144 ) };
+    float radius { static_cast<float>(randomNumber( 1, 144 )) };
 
     sf::CircleShape* circle { new sf::CircleShape(radius) };
 
-    auto widthF = static_cast<float>(width);
-    auto heightF = static_cast<float>(height);
-
-    if (x + radius * 2 > widthF) {
-        radius = (widthF - x) / 2;
+    if (x + radius * 2 > constants::widthF) {
+        radius = (constants::widthF - x) / 2;
     }
 
-    if (y + radius * 2 > heightF) {
-        radius = (heightF - y) / 2;
+    if (y + radius * 2 > constants::widthF) {
+        radius = (constants::widthF - y) / 2;
     }
 
     circle->setPosition(x, y);
@@ -75,9 +67,9 @@ sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleSh
         }
     }
 
-    float r { generateRandomNumber(255) };
-    float g { generateRandomNumber(255) };
-    float b { generateRandomNumber(255) };
+    float r { static_cast<float>(randomNumber( 0, 255 )) };
+    float g { static_cast<float>(randomNumber( 0, 255 )) };
+    float b { static_cast<float>(randomNumber( 0, 255 )) };
 
     circle->setFillColor(sf::Color(0, 0, 0));
     circle->setOutlineColor(sf::Color(r, g, b));
@@ -87,12 +79,14 @@ sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleSh
 }
 
 int drawCirclePacking() {
-    sf::RenderWindow window(sf::VideoMode(width, height), "Circle Packing");
+    int width { constants::width };
+
+    sf::RenderWindow window(sf::VideoMode(width, width), "Circle Packing");
     std::vector<sf::CircleShape*> circles;
 
     for (int i {0}; i<maxCount;) {
-        float x { generateRandomNumber(width) };
-        float y { generateRandomNumber(height) };
+        float x { static_cast<float>(randomNumber( 1, width )) };
+        float y { static_cast<float>(randomNumber( 1, width )) };
 
         auto circle { generateCircle(x, y, circles) };
         if (circle) {

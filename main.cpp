@@ -4,8 +4,11 @@
 
 int drawCirclePacking();
 int drawPietMondrian();
+int drawHypnoticSquares();
 
 int main() {
+    drawCirclePacking();
     drawPietMondrian();
+    drawHypnoticSquares();
     return 0;
 }
