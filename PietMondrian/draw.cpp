@@ -13,9 +13,13 @@ static int width { 600 };
 static float thickness { 5.f };
 static std::mt19937 mersenne{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
 
+int randomNumber(int min, int max) {
+    std::uniform_int_distribution die(min, max);
+    return die(mersenne);
+}
+
 bool randomBool() {
-    std::uniform_int_distribution die{ 1, 100 };
-    return die(mersenne) >= 50;
+    return randomNumber(1, 100) >= 50;
 }
 
 sf::RectangleShape* generateRect(float width, float height, float x=0.f, float y=0.f) {
@@ -55,10 +59,11 @@ void splitRect(float p, char xORy, std::vector<sf::RectangleShape*>& rects) {
 }
 
 void randomChooseAndColor(std::vector<sf::RectangleShape*>& rects, sf::Color color) {
+
     while (true) {
-        std::shuffle(rects.begin(), rects.end(), std::mt19937(std::random_device()()));
-        if (rects[1]->getFillColor() == sf::Color(0, 0, 0)) {
-            rects[1]->setFillColor(color);
+        int i { randomNumber(0, rects.size()-1) };
+        if (rects[i]->getFillColor() == sf::Color(0, 0, 0)) {
+            rects[i]->setFillColor(color);
             break;
         }
     }
