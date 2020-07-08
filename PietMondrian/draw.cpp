@@ -5,12 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "../constants.h"
-
+#include "../utils.h"
 
 static float thickness { 5.f };
-
-
-int randomNumber(int min, int max);
 
 bool randomBool() {
     return randomNumber(1, 100) >= 50;
@@ -65,7 +62,7 @@ void randomChooseAndColor(std::vector<sf::RectangleShape*>& rects, sf::Color col
 
 int drawPietMondrian() {
     int width { constants::width };
-    sf::RenderWindow window(sf::VideoMode(width, width), "Piet Mondrian");
+    auto window { getWindow("Piet Mondrian") };
     std::vector<sf::RectangleShape*> rects;
     rects.push_back( generateRect(static_cast<float>(width), static_cast<float>(width)) );
 
@@ -79,17 +76,17 @@ int drawPietMondrian() {
     randomChooseAndColor(rects, sf::Color(0, 255, 0));
     randomChooseAndColor(rects, sf::Color(0, 0, 255));
 
-    while (window.isOpen()) {
+    while (window->isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();
+                window->close();
             }
         }
 
-        window.clear();
+        window->clear();
         for (auto rect: rects)
-            window.draw(*rect);
-        window.display();
+            window->draw(*rect);
+        window->display();
     }
 }

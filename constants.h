@@ -8,6 +8,7 @@
 namespace constants {
     constexpr int width { 600 };
     constexpr float widthF {static_cast<float>(width) };
+    const std::string iconPath { "../logo.png" };
 }
 
 #endif //CPPGENERATIVEARTISTRY_CONSTANTS_H

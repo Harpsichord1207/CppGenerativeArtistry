@@ -3,16 +3,13 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include <ctime>
 #include <iostream>
 #include <random>
 #include <vector>
 #include "../constants.h"
-
+#include "../utils.h"
 
 static int maxCount { 1000 };
-
-int randomNumber(int min, int max);
 
 bool circleOverlap(sf::CircleShape* c1, sf::CircleShape* c2) {
     float x1 { c1->getPosition().x };
@@ -81,7 +78,7 @@ sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleSh
 int drawCirclePacking() {
     int width { constants::width };
 
-    sf::RenderWindow window(sf::VideoMode(width, width), "Circle Packing");
+    auto window { getWindow("Circle Packing") };
     std::vector<sf::CircleShape*> circles;
 
     for (int i {0}; i<maxCount;) {
@@ -96,19 +93,19 @@ int drawCirclePacking() {
         }
     }
 
-    while (window.isOpen())
+    while (window->isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (window->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                window->close();
         }
 
-        window.clear();
+        window->clear();
         for (auto circle: circles)
-            window.draw(*circle);
-        window.display();
+            window->draw(*circle);
+        window->display();
     }
 
     return 0;

@@ -4,14 +4,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include "../constants.h"
+#include "../utils.h"
 
 static int gridCnt { 10 };  // how many grid in a row or column
 static float gridWidth { 60.f };
 static float thickness { 1.f };
 static float windowWidth { gridCnt * gridWidth + 2*thickness };
-
-int randomNumber(int min, int max);
 
 // give a square's position(eg: x=0, y=0, _width=10), randomly return a point from:
 //   (2.5, 2.5), (2.5, 5.0), (2.5, 7.5)
@@ -69,7 +68,8 @@ void drawInnerRects(sf::RectangleShape* r, std::vector<sf::RectangleShape*>& rs)
 }
 
 int drawHypnoticSquares() {
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "Hypnotic Squares", sf::Style::Close);
+    auto window { getWindow("Hypnotic Squares", windowWidth, windowWidth) };
+
     std::vector<sf::RectangleShape*> rects;
 
     for (int row{0}; row < gridCnt; ++row) {
@@ -82,17 +82,17 @@ int drawHypnoticSquares() {
         drawInnerRects(rects[i], rects);
     }
 
-    while (window.isOpen()) {
+    while (window->isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();
+                window->close();
             }
         }
-        window.clear();
+        window->clear();
         for (auto rect: rects) {
-            window.draw(*rect);
+            window->draw(*rect);
         }
-        window.display();
+        window->display();
     }
 }
