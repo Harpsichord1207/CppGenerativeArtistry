@@ -20,5 +20,6 @@ add_executable(
         CirclePacking/draw.cpp
         PietMondrian/draw.cpp
         HypnoticSquares/draw.cpp
+        UnDeuxTrois/draw.cpp
 )
 target_link_libraries(CppGenerativeArtistry sfml-audio sfml-network sfml-graphics sfml-window sfml-system)

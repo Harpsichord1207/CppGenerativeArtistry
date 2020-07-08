@@ -64,12 +64,8 @@ sf::CircleShape* generateCircle(float x, float y, const std::vector<sf::CircleSh
         }
     }
 
-    float r { static_cast<float>(randomNumber( 0, 255 )) };
-    float g { static_cast<float>(randomNumber( 0, 255 )) };
-    float b { static_cast<float>(randomNumber( 0, 255 )) };
-
     circle->setFillColor(sf::Color(0, 0, 0));
-    circle->setOutlineColor(sf::Color(r, g, b));
+    circle->setOutlineColor(*randomColor());
     circle->setOutlineThickness(1.f);
     circle->setPointCount(static_cast<int>(radius*3));  // make circle more smooth
     return circle;
