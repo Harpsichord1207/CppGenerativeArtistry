@@ -1,4 +1,4 @@
-# CppGenerativeArtistry
+# CppGenerativeArtistry <img alt="ICON" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/logo.png" width="30" height="30">
 Use cpp/sfml to generate images in https://generativeartistry.com/tutorials/  
 
 ---  
