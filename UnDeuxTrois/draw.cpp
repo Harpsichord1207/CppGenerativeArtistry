@@ -2,52 +2,65 @@
 // Created by liutao3 on 2020/7/8.
 //
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <vector>
 #include "../constants.h"
 #include "../utils.h"
 
 static float thickness { 4.f };
-static float length { 30.f };
+static float length { 40.f };
 
-sf::RectangleShape* generateLine(float x, float y, float l, sf::Color& color, int rotateMin=-90, int rorateMax=90) {
-    auto line { new sf::RectangleShape };
-    line->setPosition(x, y);
-    line->setSize(sf::Vector2(thickness, l));
-    line->rotate(randomNumber(rotateMin, rorateMax));
-    line->setFillColor(color);
+
+sf::Vertex* generateLine(float x, float y, float l, sf::Color& color) {
+    auto p1 { sf::Vertex(sf::Vector2f(x, y), color )};
+    auto p2 { sf::Vertex(sf::Vector2f(x, y+l), color) };
+    auto p3 { sf::Vertex(sf::Vector2f(x+thickness, y+l), color) };
+    auto p4 { sf::Vertex(sf::Vector2f(x+thickness, y), color) };
+    sf::Vertex* line { new sf::Vertex[4] };
+    line[0] = p1;
+    line[1] = p2;
+    line[2] = p3;
+    line[3] = p4;
     return line;
+}
+
+void rotateLine(sf::Vertex* line, float rX, float rY, int ang) {
+    sf::Transform rotation;
+    rotation.rotate(ang, rX, rY);
+    for (int i {0}; i<4; ++i){
+        line[i].position =  rotation.transformPoint(line[i].position);
+    }
+}
+
+float getMargin(int n, int i) {
+    static const float marginMap[3][3] {
+            {0.5f, -1.f, -1.f},
+            {0.2f, 0.8f, -1.f},
+            {0.1f, 0.5f, 0.9f}
+    };
+    return marginMap[n-1][i];
+}
+
+void drawLinesGrid(float pX, float pY, int n, std::vector<sf::Vertex*>& lines) {
+    float width { 40.f };
+
+    float midX { pX + width/2 };
+    float midY { pY + length/2 };
+    int ang { randomNumber(-90, 90) };
+    for (int i {0}; i<n; ++i) {
+        auto line { generateLine(pX+width*getMargin(n, i), pY, length, *randomColor()) };
+        rotateLine(line, midX, midY, ang);
+        lines.push_back(line);
+    }
 }
 
 int drawUnDeuxTrois() {
     auto window { getWindow("Un Deux Trois") };
 
-    std::vector<sf::RectangleShape*> lines;
+    std::vector<sf::Vertex*> lines;
 
-    for (int i{0}; i<constants::width;i+=40) {
-        int j { 0 };
-        while (j<constants::width) {
-            float x { i+15.f };
-            float y { j+5.f };
-            auto color { randomColor() };
-
-            if (j<constants::width/3) {
-                lines.push_back(generateLine(x, y, length, *color));
-            } else if (j<2*constants::width/3) {
-                int rotateNumber { randomNumber(-90, 90) };
-                lines.push_back(generateLine(x-3, y, length, *color, rotateNumber-10, rotateNumber+10));
-                lines.push_back(generateLine(x+12, y, length, *color, rotateNumber-10, rotateNumber+10));
-            } else {
-                int rotateNumber { randomNumber(-90, 90) };
-                int rMin { rotateNumber - 3 };
-                int rMax { rotateNumber + 3 };
-
-                lines.push_back(generateLine(x-12, y, length, *color, rMin, rMax));
-                lines.push_back(generateLine(x+7, y, length, *color, rMin, rMax));
-                lines.push_back(generateLine(x+15, y, length, *color, rMin, rMax));
-            }
-
-            j+=length;
+    for (int r{0}; r<constants::width; r+=40.f){
+        for (int c{0}; c<constants::width; c+=length) {
+            drawLinesGrid(r, c, c/(constants::width/3) + 1, lines);
         }
     }
 
@@ -58,12 +71,12 @@ int drawUnDeuxTrois() {
                 window->close();
             }
         }
-
         window->clear();
         for (auto line: lines) {
-            window->draw(*line);
+            window->draw(line, 4, sf::Quads);
         }
         window->display();
     }
+    return 0;
 };
 
