@@ -9,7 +9,7 @@ typedef std::vector<std::vector<sf::Vector2f>> point2DVector ;
 
 static float sideLength { 600.f / 8 };
 
-sf::Vector2f* randomPoint(float x, float y, bool odd=false) {
+sf::Vector2f* randomPoint(float x, float y) {
     float rX ;
     float rY ;
     // while loop avoid point to get out of border
@@ -40,7 +40,7 @@ int drawTriangularMesh() {
         for (float r{sideLength/3}; r<constants::width; r+=sideLength) {
             auto x { r+odd*sideLength/2 };
             auto y { c };
-            lines1.back().push_back(*randomPoint(x, y, odd));  // random offset point position
+            lines1.back().push_back(*randomPoint(x, y));  // random offset point position
         }
     }
 
@@ -50,28 +50,14 @@ int drawTriangularMesh() {
     for (int i { 0 }; i < lines1.size(); ++i){
         odd = i%2!=0;
         for (int j { 0 }; j<lines1[i].size()-1; ++j){
-            if (i == lines1.size() - 1) {
-                lines2.emplace_back();
-                lines2.back().push_back(lines1[i][j]);
-                lines2.back().push_back(lines1[i][j+1]);
-                lines2.back().push_back(lines1[i-1][odd?j:j+1]);
-
-            } else if (i == 0) {
-                lines2.emplace_back();
-                lines2.back().push_back(lines1[i][j]);
-                lines2.back().push_back(lines1[i][j+1]);
-                lines2.back().push_back(lines1[i+1][j+1]);
-
-            } else {
-                lines2.emplace_back();
-                lines2.back().push_back(lines1[i][j]);
-                lines2.back().push_back(lines1[i][j+1]);
-                lines2.back().push_back(lines1[i+(odd?-1:1)][odd?j:j+1]);
-
-                lines2.emplace_back();
-                lines2.back().push_back(lines1[i][j]);
-                lines2.back().push_back(lines1[i][j+1]);
-                lines2.back().push_back(lines1[i+(odd?1:-1)][odd?j:j+1]);
+            for (int k { -1 }; k<=1; k+=2){  // k = -1 or 1, means the previous row or next row
+                auto _i { i+(odd?k:-k) };
+                if (_i>=0 && _i <lines1.size()) {
+                    lines2.emplace_back();
+                    lines2.back().push_back(lines1[i][j]);              // current point
+                    lines2.back().push_back(lines1[i][j+1]);            // next point in the same row
+                    lines2.back().push_back(lines1[_i][odd?j:j+1]);     // third point in the previous or next row
+                }
             }
         }
     }
