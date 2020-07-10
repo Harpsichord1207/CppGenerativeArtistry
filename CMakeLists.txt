@@ -21,5 +21,6 @@ add_executable(
         PietMondrian/draw.cpp
         HypnoticSquares/draw.cpp
         UnDeuxTrois/draw.cpp
+        TriangularMesh/draw.cpp
 )
 target_link_libraries(CppGenerativeArtistry sfml-audio sfml-network sfml-graphics sfml-window sfml-system)

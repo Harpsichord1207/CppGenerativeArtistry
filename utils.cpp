@@ -15,7 +15,9 @@ int randomNumber(int min, int max) {
 }
 
 sf::RenderWindow* getWindow(const char* title, int wdith, int height) {
-    auto window { new sf::RenderWindow(sf::VideoMode(wdith, height), title, sf::Style::Close) };
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 10;
+    auto window { new sf::RenderWindow(sf::VideoMode(wdith, height), title, sf::Style::Close, settings) };
     sf::Image icon;
     icon.loadFromFile(constants::iconPath);
     window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -31,3 +33,12 @@ sf::Color* randomColor() {
     auto color { new sf::Color(r, g, b) };
     return color;
 }
+
+sf::Color* randomGrayScale() {
+
+    int a { randomNumber(0, 255) };
+
+    auto color { new sf::Color(255, 255, 255, a) };
+    return color;
+}
+

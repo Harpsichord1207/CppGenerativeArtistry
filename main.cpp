@@ -6,11 +6,13 @@ int drawCirclePacking();
 int drawPietMondrian();
 int drawHypnoticSquares();
 int drawUnDeuxTrois();
+int drawTriangularMesh();
 
 int main() {
     drawCirclePacking();
     drawPietMondrian();
     drawHypnoticSquares();
     drawUnDeuxTrois();
+    drawTriangularMesh();
     return 0;
 }
