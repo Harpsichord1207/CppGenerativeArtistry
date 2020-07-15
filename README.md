@@ -23,3 +23,7 @@ https://generativeartistry.com/tutorials/un-deux-trois/
 ## Triangular Mesh  
 https://generativeartistry.com/tutorials/triangular-mesh/  
 <img alt="HypnoticSquares" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/TriangularMesh/image.png" width="300" height="300">
+
+## Cubic Disarray
+https://generativeartistry.com/tutorials/cubic-disarray/
+<img alt="HypnoticSquares" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/CubicDissary/image.png" width="300" height="300">
