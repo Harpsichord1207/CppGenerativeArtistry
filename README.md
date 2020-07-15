@@ -25,5 +25,5 @@ https://generativeartistry.com/tutorials/triangular-mesh/
 <img alt="TriangularMesh" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/TriangularMesh/image.png" width="300" height="300">
 
 ## Cubic Disarray
-https://generativeartistry.com/tutorials/cubic-disarray/
+https://generativeartistry.com/tutorials/cubic-disarray/  
 <img alt="CubicDissary" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/CubicDisarray/image.png" width="300" height="300">
