@@ -23,5 +23,6 @@ add_executable(
         UnDeuxTrois/draw.cpp
         TriangularMesh/draw.cpp
         CubicDisarray/draw.cpp
+        JoyDivision/draw.cpp
 )
 target_link_libraries(CppGenerativeArtistry sfml-audio sfml-network sfml-graphics sfml-window sfml-system)
