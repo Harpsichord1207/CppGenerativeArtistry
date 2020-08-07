@@ -29,7 +29,7 @@ sf::VertexArray getRandomLine(float x, float y, float l) {
 int drawTiledLines() {
 
     std::vector<sf::VertexArray> lines;
-    int length { 10 };
+    int length { 20 };
 
     for (int x{0}; x<constants::width; x+=length) {
         for (int y{0}; y<constants::width; y+=length) {
