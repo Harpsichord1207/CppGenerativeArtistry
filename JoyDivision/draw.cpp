@@ -3,89 +3,65 @@
 //
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include <vector>
+#include <windows.h>
 #include "../constants.h"
 #include "../utils.h"
 
-static float thickness { 1.f };
+
 static float length { 30.f };
 
-std::vector<sf::Vector2f> CalcCubicBezier(
-        const sf::Vector2f &start,
-        const sf::Vector2f &end,
-        const sf::Vector2f &startControl,
-        const sf::Vector2f &endControl,
-        const size_t numSegments)
-{
-    std::vector<sf::Vector2f> ret;
-    if (!numSegments) // Any points at all?
-        return ret;
-
-    ret.push_back(start); // First point is fixed
-    float p = 1.f / numSegments;
-    float q = p;
-    for (size_t i = 1; i < numSegments; i++, p += q) // Generate all between
-        ret.push_back(p * p * p * (end + 3.f * (startControl - endControl) - start) +
-                      3.f * p * p * (start - 2.f * startControl + endControl) +
-                      3.f * p * (startControl - start) + start);
-    ret.push_back(end); // Last point is fixed
-    return ret;
+sf::VertexArray drawLine(float x, float y, float l, int r1, int r2) {
+    auto point1 { sf::Vertex(sf::Vector2f(x, y-r2)) };
+    auto point2 { sf::Vertex(sf::Vector2f(x+l, y-r1-r2)) };
+    auto line { sf::VertexArray(sf::Lines, 2) };
+    line.append(point1);
+    line.append(point2);
+    return line;
 }
-
-
-
-sf::RectangleShape* drawLine(float x, float y, float l) {
-    auto rect { new sf::RectangleShape };
-    rect->setSize(sf::Vector2f(l, thickness));
-    rect->setPosition(x, y);
-    return rect;
-
-}
-
-//std::vector<sf::VertexArray> drawCurve(float x, float y, float l) {
-//    std::vector<sf::VertexArray> curve;
-//    for (float i {x}; i<x+l; i+=(l-x)/5) {
-//        sf::VertexArray
-//    }
-//    return curve;
-//}
-
-sf::VertexArray* drawCurve(float x, float y, float l) {
-    auto curve { new sf::VertexArray(sf::LineStrip, 0) };
-    auto s { sf::Vector2f(x, y) };
-    auto e { sf::Vector2f(x+l, y+2*l) };
-    auto sC { sf::Vector2f(x+l/4, l/2) };
-    auto eC { sf::Vector2f(x+l/4*3, l/2*3) };
-    std::vector<sf::Vector2f> points { CalcCubicBezier(s, e, sC, eC, 100) };
-
-    for (auto & point : points)
-        curve->append(sf::Vertex(point, sf::Color::White));
-    return curve;
-}
-
 
 int drawJoyDivision() {
-    std::vector<sf::RectangleShape*> lines;
-    for (int row{0}; row<constants::width-length; row+=length) {
-        for (int col{0}; col<constants::width; col+=length/2) {
-            auto line = drawLine(row+length/2, col+length/2, length);
-            lines.push_back(line);
+    std::vector<std::vector<sf::Vector2f>> points;
+
+    for (int col{0}; col<=constants::width; col+=length/2) {
+        points.emplace_back();
+        for (int row{0}; row<constants::width; row+=length) {
+            auto distanceToCenter { std::abs(row - constants::width/2) };
+            auto variance { constants::width/2 - distanceToCenter };
+            variance = variance > 0 ? variance : 0;
+            auto randomH { randomNumber(0, variance / 2 ) };
+            if (randomH <= 15) {
+                randomH = 0;
+            }
+             std::cout << "(row, h) = (" << row << ", " << randomH << ")\n";
+            points.back().emplace_back(row+length/2, col+length/2-randomH+100);
         }
     }
 
-
+    std::vector<sf::VertexArray> lines;
+    for (auto line: points) {
+        for (int i{0}; i<line.size()-1; ++i){
+            auto l { sf::VertexArray(sf::Lines, 2) };
+            l.append(line[i]);
+            l.append(line[i+1]);
+            lines.emplace_back(l);
+        }
+    }
 
     auto window { getWindow("Joy Division") };
     while (window->isOpen()) {
-        sf::Event event;
+        sf::Event event{};
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window->close();
             }
         }
-
         window->clear();
-        window->draw(*drawCurve(50, 50, 100));
+        for (const auto& line: lines) {
+            window->draw(line);
+        }
         window->display();
     }
+    return 0;
 }
