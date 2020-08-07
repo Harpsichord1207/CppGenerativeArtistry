@@ -28,7 +28,7 @@ https://generativeartistry.com/tutorials/triangular-mesh/
 https://generativeartistry.com/tutorials/cubic-disarray/  
 <img alt="CubicDissary" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/CubicDisarray/image.png" width="300" height="300">
 
-## Joy Division
-https://generativeartistry.com/tutorials/joy-division/
-This image is not good(in fact it's ugly), I will try again if I find a good way to draw smooth lines by SFML.
+## Joy Division  
+https://generativeartistry.com/tutorials/joy-division/  
+This image is not good(in fact it's ugly), I will try again if I find a good way to draw smooth lines by SFML.  
 <img alt="JoyDivision" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/JoyDivision/image.png" width="300" height="300">
