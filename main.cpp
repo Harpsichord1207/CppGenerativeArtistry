@@ -9,6 +9,7 @@ int drawUnDeuxTrois();
 int drawTriangularMesh();
 int drawCubicDisarray();
 int drawJoyDivision();
+int drawTiledLines();
 
 int main() {
     drawCirclePacking();
@@ -18,5 +19,6 @@ int main() {
     drawTriangularMesh();
     drawCubicDisarray();
     drawJoyDivision();
+    drawTiledLines();
     return 0;
 }

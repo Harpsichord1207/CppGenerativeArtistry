@@ -32,3 +32,7 @@ https://generativeartistry.com/tutorials/cubic-disarray/
 https://generativeartistry.com/tutorials/joy-division/  
 This image is not good(in fact it's ugly), I will try again if I find a good way to draw smooth lines by SFML.  
 <img alt="JoyDivision" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/JoyDivision/image.png" width="300" height="300">
+
+## Tiled Lines  
+https://generativeartistry.com/tutorials/tiled-lines/  
+<img alt="TiledLines" src="https://github.com/Harpsichord1207/CppGenerativeArtistry/blob/master/TiledLines/image.png" width="300" height="300">

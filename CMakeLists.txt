@@ -24,5 +24,6 @@ add_executable(
         TriangularMesh/draw.cpp
         CubicDisarray/draw.cpp
         JoyDivision/draw.cpp
+        TiledLines/draw.cpp
 )
 target_link_libraries(CppGenerativeArtistry sfml-audio sfml-network sfml-graphics sfml-window sfml-system)

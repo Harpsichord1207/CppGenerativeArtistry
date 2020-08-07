@@ -3,7 +3,6 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <vector>
 #include <windows.h>
 #include "../constants.h"
@@ -11,15 +10,6 @@
 
 
 static float length { 30.f };
-
-sf::VertexArray drawLine(float x, float y, float l, int r1, int r2) {
-    auto point1 { sf::Vertex(sf::Vector2f(x, y-r2)) };
-    auto point2 { sf::Vertex(sf::Vector2f(x+l, y-r1-r2)) };
-    auto line { sf::VertexArray(sf::Lines, 2) };
-    line.append(point1);
-    line.append(point2);
-    return line;
-}
 
 int drawJoyDivision() {
     std::vector<std::vector<sf::Vector2f>> points;
@@ -34,7 +24,6 @@ int drawJoyDivision() {
             if (randomH <= 15) {
                 randomH = 0;
             }
-             std::cout << "(row, h) = (" << row << ", " << randomH << ")\n";
             points.back().emplace_back(row+length/2, col+length/2-randomH+100);
         }
     }
